@@ -10,12 +10,12 @@ readonly AUTHOR="sheepla"
 readonly CODE_MANGLER="botus99"
 
 readonly KEYBINDINGS="\
------------------------------------
-| CTRL + O |   Open with browser  | 
-| ENTER    |   View README        |
-| TAB      |   Select multiple    |
-| ESC      |   Quit               |
------------------------------------"
+󰇘󰇘󰇘󰇘󰇘󰇘󰇘󰇘󰇘󰇘󰇘󰇘󰇘󰇘󰇘󰇘󰇘󰇘󰇘󰇘󰇘󰇘󰇘󰇘󰇘󰇘󰇘󰇘󰇘󰇘󰇘󰇘󰇘󰇘󰇘
+ CTRL + O  |  Open with browser   
+ ENTER     |  View README        
+ TAB       |  Select multiple    
+ ESC       |  Quit               
+󰇘󰇘󰇘󰇘󰇘󰇘󰇘󰇘󰇘󰇘󰇘󰇘󰇘󰇘󰇘󰇘󰇘󰇘󰇘󰇘󰇘󰇘󰇘󰇘󰇘󰇘󰇘󰇘󰇘󰇘󰇘󰇘󰇘󰇘󰇘"
 
 function _version() {
     echo -e "\033[1m${SCRIPT_NAME}\033[0m"
@@ -90,7 +90,8 @@ function _fzf() {
 		--border \
 		--border=rounded \
 		--margin=1% \
-		--gap=1
+		--gap=1 \
+		--prompt="󰊤 "
 }
 
 _main "${@}"
