@@ -5,7 +5,9 @@
     <img src="https://img.shields.io/static/v1?label=License&message=MIT&color=blue&style=flat-square"/>
 </div>
 
-An extension for [GitHub CLI](https://github.com/cli/cli) to browse repositories with fzf
+An extension for [GitHub CLI](https://github.com/cli/cli) to browse repositories with fzf.
+This fork uses [glow](https://github.com/charmbracelet/glow) to preview README files while browsing repos.
+It also has tweaks made to how fzf displays results (reverse, border, gap, etc).
 
 ## Demo on asciinema.org
 
