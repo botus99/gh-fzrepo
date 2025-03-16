@@ -21,12 +21,12 @@ An extension for [GitHub CLI](https://github.com/cli/cli) to browse repositories
 ## Usage
 
 ```
-gh fzrepo -- An extension for GitHub CLI to browse repositories with fzf
+gh-fzrepo -- An extension for GitHub CLI to browse repositories with fzf
 
 USAGE
-    gh fzrepo KEYWORDS...
-    gh fzrepo -h|--help
-    gh fzrepo -V|--version
+    gh-fzrepo KEYWORDS...
+    gh-fzrepo -h|--help
+    gh-fzrepo -v|--version
 ```
 
 ### Keybindings
@@ -45,9 +45,10 @@ Dependences:
 
 - [GitHub CLI](https://github.com/cli/cli) v2.0.0+
 - [junegunn/fzf](https://github.com/junegunn/fzf)
+- [charmbracelet/glow](https://github.com/charmbracelet/glow)
 
 ```bash
-gh extension install sheepla/gh-fzrepo
+gh extension install botus99/gh-fzrepo
 ```
 
 ## One Liner Edition
