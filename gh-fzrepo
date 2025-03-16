@@ -1,39 +1,47 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-#readonly THIS_CMD="${0##*/}"
-readonly VERSION="0.0.1"
+set -euo pipefail
+
+readonly SCRIPT_NAME="$(basename "$0")"
+readonly VERSION="0.0.2"
 readonly LICENSE="MIT"
 readonly GITHUB_URL="https://github.com"
 readonly AUTHOR="sheepla"
+readonly CODE_MANGLER="botus99"
 
 readonly KEYBINDINGS="\
-Ctrl+O   open with browser
-Enter    view README"
+-----------------------------------
+| CTRL + O |   Open with browser  | 
+| ENTER    |   View README        |
+| TAB      |   Select multiple    |
+| ESC      |   Quit               |
+-----------------------------------"
 
 function _version() {
-	cat <<EOS
-${THIS_CMD} v${VERSION}
-released under the ${LICENSE} license.
-    Author: ${AUTHOR} (${GITHUB_URL}/${AUTHOR})
-EOS
+    echo -e "\033[1m${SCRIPT_NAME}\033[0m"
+    echo "---------"
+    echo "v${VERSION}"
+    echo "Author: ${AUTHOR} (${GITHUB_URL}/${AUTHOR})"
+    echo "Tweaker: ${CODE_MANGLER} (${GITHUB_URL}/${CODE_MANGLER})"
+    echo "Released under the ${LICENSE} license."
 }
 
 function _help() {
-	cat <<EOS
-gh fzrepo -- GitHub repository browser with fzf
-
-USAGE
-    gh fzrepo KEYWORDS...
-    gh fzrepo -h|--help
-    gh fzrepo -V|--version
-EOS
+    echo -e "\033[1m${SCRIPT_NAME}\033[0m"
+    echo "---------"
+    echo "GitHub repository browser with fzf"
+    echo ""
+    echo "USAGE"
+    echo "    $SCRIPT_NAME KEYWORDS..."
+    echo "    $SCRIPT_NAME -h|--help"
+    echo "    $SCRIPT_NAME -v|--version"
 }
 
 function _main() {
 
 	if [[ "${#}" -le 0 ]]; then
 		_help
-		_err "Must require arguments..."
+		_error "${SCRIPT_NAME} requires KEYWORDS"
 		return 1
 	fi
 
@@ -43,7 +51,7 @@ function _main() {
 			_help
 			return 0
 			;;
-		-V | --version)
+		-v | --version)
 			_version
 			return 0
 			;;
@@ -53,8 +61,8 @@ function _main() {
 	_search_repo "${*}" | _fzf
 }
 
-function _err() {
-	printf "[\e[31m ERR \e[m] %s\n" "${*}"
+function _error() {
+	printf "[\e[31m ERROR \e[m] %s\n" "${*}"
 }
 
 function _encode() {
@@ -75,9 +83,14 @@ function _fzf() {
 	fzf </dev/stdin \
 		--multi \
 		--header "${KEYBINDINGS}" \
-		--preview "gh repo view {}" \
+		--preview "gh repo view {} | glow" \
 		--bind "enter:execute(gh repo view {})" \
-		--bind "ctrl-o:execute(gh repo view {} -w &>/dev/null &)"
+		--bind "ctrl-o:execute(gh repo view {} -w &>/dev/null &)" \
+		--reverse \
+		--border \
+		--border=rounded \
+		--margin=1% \
+		--gap=1
 }
 
 _main "${@}"
