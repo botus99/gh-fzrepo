@@ -2,20 +2,22 @@
 
 set -euo pipefail
 
+# Set colors for fzf
+COLOR_OPTS="bg+:0,fg:15,fg+:9,border:8,hl+:2,prompt:15,hl:2,pointer:1,info:8,spinner:1"
+
 readonly SCRIPT_NAME="$(basename "$0")"
 readonly VERSION="0.0.2"
 readonly LICENSE="MIT"
 readonly GITHUB_URL="https://github.com"
 readonly AUTHOR="sheepla"
 readonly CODE_MANGLER="botus99"
-
 readonly KEYBINDINGS="\
-󰇘󰇘󰇘󰇘󰇘󰇘󰇘󰇘󰇘󰇘󰇘󰇘󰇘󰇘󰇘󰇘󰇘󰇘󰇘󰇘󰇘󰇘󰇘󰇘󰇘󰇘󰇘󰇘󰇘󰇘󰇘󰇘󰇘󰇘󰇘
- CTRL + O  |  Open with browser   
- ENTER     |  View README        
- TAB       |  Select multiple    
- ESC       |  Quit               
-󰇘󰇘󰇘󰇘󰇘󰇘󰇘󰇘󰇘󰇘󰇘󰇘󰇘󰇘󰇘󰇘󰇘󰇘󰇘󰇘󰇘󰇘󰇘󰇘󰇘󰇘󰇘󰇘󰇘󰇘󰇘󰇘󰇘󰇘󰇘"
+-----------------------------------
+| CTRL + O |   Open with browser  | 
+| ENTER    |   View README        |
+| TAB      |   Select multiple    |
+| ESC      |   Quit               |
+-----------------------------------"
 
 function _version() {
     echo -e "\033[1m${SCRIPT_NAME}\033[0m"
@@ -81,17 +83,20 @@ function _search_repo() {
 
 function _fzf() {
 	fzf </dev/stdin \
+        --color="$COLOR_OPTS" \
+        --highlight-line \
+        --prompt=" " \
+        --pointer " " \
 		--multi \
 		--header "${KEYBINDINGS}" \
 		--preview "gh repo view {} | glow" \
 		--bind "enter:execute(gh repo view {})" \
 		--bind "ctrl-o:execute(gh repo view {} -w &>/dev/null &)" \
-		--reverse \
+		--layout=reverse \
 		--border \
 		--border=rounded \
 		--margin=1% \
-		--gap=1 \
-		--prompt="󰊤 "
+		--gap=1
 }
 
 _main "${@}"
